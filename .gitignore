@@ -1,0 +1,14 @@
+# Node / Angular
+node_modules/
+dist/
+.angular/
+npm-debug.log*
+yarn-error.log*
+package-lock.json
+# Java (backend)
+target/
+# IDE/OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
