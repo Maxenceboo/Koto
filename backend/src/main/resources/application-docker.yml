@@ -11,12 +11,16 @@ spring:
     enabled: true
     baseline-on-migrate: true
     locations: classpath:db/migration
+
+springdoc:
   api-docs:
     enabled: true
     path: /v3/api-docs
   swagger-ui:
     enabled: true
-    path: /swagger-ui
+    path: /swagger-ui.html   # URL standard
     display-request-duration: true
     tags-sorter: alpha
     operations-sorter: alpha
+  packages-to-scan: com.koto
+  paths-to-match: /api/**
