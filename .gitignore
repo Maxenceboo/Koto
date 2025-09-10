@@ -12,3 +12,5 @@ target/
 .idea/
 .DS_Store
 Thumbs.db
+
+.env

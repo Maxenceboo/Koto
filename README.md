@@ -1,7 +1,14 @@
-# Koto — citations par canaux
+# 🌐 Koto — Fullstack App
 
-Monorepo :
-- frontend/ : Angular + PrimeNG + Tailwind
-- backend/  : Spring Boot (API 3 couches)
+Koto est une application fullstack (Angular + Spring Boot + PostgreSQL) permettant de **référencer et partager des phrases** dans des canaux.
 
-Idée : canaux privés/publiques où l’on enregistre des phrases (qui, quand, où).
+---
+
+## ⚙️ Stack
+- **Frontend** : Angular 19 + TailwindCSS
+- **Backend** : Java 17, Spring Boot 3.3, JPA/Hibernate, Flyway, PostgreSQL
+- **DB** : PostgreSQL 16
+- **Infra** : Docker / Docker Compose
+- **Dev** : Hot reload (Angular `ng serve` + Spring Boot DevTools)
+
+---
