@@ -10,3 +10,13 @@ spring:
   flyway:
     enabled: true
     baseline-on-migrate: true
+    locations: classpath:db/migration
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui
+    display-request-duration: true
+    tags-sorter: alpha
+    operations-sorter: alpha

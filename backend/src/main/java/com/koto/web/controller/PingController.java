@@ -1,4 +1,4 @@
-package com.koto.web;
+package com.koto.web.controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
