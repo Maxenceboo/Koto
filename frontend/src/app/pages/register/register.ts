@@ -3,11 +3,12 @@ import { Navbar } from '../../shared/ui/navbar/navbar';
 import { RegisterForm } from './components/register-form/register-form';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { environment} from '../../../../environements/environement';
+import {NgOptimizedImage} from '@angular/common';
 
 @Component({
   selector: 'app-register-page',
   standalone: true,
-  imports: [HttpClientModule, Navbar, RegisterForm],
+  imports: [HttpClientModule, Navbar, RegisterForm, NgOptimizedImage],
   templateUrl: './register.html',
 })
 export class Register {

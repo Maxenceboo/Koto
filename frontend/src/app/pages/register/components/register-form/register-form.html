@@ -1,10 +1,16 @@
 <form class="space-y-3" [formGroup]="form" (ngSubmit)="submit()" >
-  <div class="space-y-8">
+  <div class="space-y-14">
     <div>
       <p-floatlabel>
         <input formControlName="username" type="text" pInputText class="w-full rounded border px-3 py-2" />
         <label class="block text-sm font-medium mb-1">Username</label>
       </p-floatlabel>
+
+      @if (form.get('username')?.touched && form.get('username')?.invalid) {
+        <p class="absolute text-red-600 mt-1">
+          Le nom d'utilisateur doit contenir au moins 3 caractères.
+        </p>
+      }
     </div>
 
     <div>
@@ -12,6 +18,12 @@
         <input formControlName="email" type="email" pInputText class="w-full rounded border px-3 py-2" />
         <label class="block text-sm font-medium mb-1">Email</label>
       </p-floatlabel>
+
+      @if (form.get('email')?.touched && form.get('email')?.invalid) {
+        <p class="absolute text-red-600 mt-1">
+          Veuillez entrer une adresse email valide.
+        </p>
+      }
     </div>
 
     <div>
@@ -19,8 +31,9 @@
         <input formControlName="password" type="password" pInputText class="w-full rounded border px-3 py-2" />
         <label class="block text-sm font-medium mb-1">Password</label>
       </p-floatlabel>
+
       @if (form.get('password')?.touched && form.get('password')?.invalid) {
-        <p class="text-xs text-red-600 mt-1">
+        <p class="absolute text-red-600 mt-1">
           Le mot de passe doit contenir au moins 8 caractères.
         </p>
       }
@@ -31,8 +44,9 @@
       <input formControlName="confirm" type="password" pInputText class="w-full rounded border px-3 py-2" />
       <label class="block text-sm font-medium mb-1">Repeat password</label>
       </p-floatlabel>
+
       @if (form.hasError('mismatch') && (form.get('confirm')?.touched || form.get('password')?.touched)){
-        <p class="text-xs text-red-600 mt-1">
+        <p class=" absolute text-xs text-red-600 mt-1">
           Les mots de passe ne correspondent pas.
         </p>
       }
