@@ -9,14 +9,14 @@
 
     <div>
       <p-floatlabel>
-        <input formControlName="email" type="email" class="w-full rounded border px-3 py-2" />
+        <input formControlName="email" type="email" pInputText class="w-full rounded border px-3 py-2" />
         <label class="block text-sm font-medium mb-1">Email</label>
       </p-floatlabel>
     </div>
 
     <div>
       <p-floatlabel>
-        <input formControlName="password" type="password" class="w-full rounded border px-3 py-2" />
+        <input formControlName="password" type="password" pInputText class="w-full rounded border px-3 py-2" />
         <label class="block text-sm font-medium mb-1">Password</label>
       </p-floatlabel>
       @if (form.get('password')?.touched && form.get('password')?.invalid) {
@@ -28,7 +28,7 @@
 
     <div>
       <p-floatlabel>
-      <input formControlName="confirm" type="password" class="w-full rounded border px-3 py-2" />
+      <input formControlName="confirm" type="password" pInputText class="w-full rounded border px-3 py-2" />
       <label class="block text-sm font-medium mb-1">Repeat password</label>
       </p-floatlabel>
       @if (form.hasError('mismatch') && (form.get('confirm')?.touched || form.get('password')?.touched)){
