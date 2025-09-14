@@ -1,0 +1,46 @@
+<form class="space-y-3" [formGroup]="form" (ngSubmit)="submit()" >
+  <div class="space-y-8">
+    <div>
+      <p-floatlabel>
+        <input formControlName="username" type="text" pInputText class="w-full rounded border px-3 py-2" />
+        <label class="block text-sm font-medium mb-1">Username</label>
+      </p-floatlabel>
+    </div>
+
+    <div>
+      <p-floatlabel>
+        <input formControlName="email" type="email" class="w-full rounded border px-3 py-2" />
+        <label class="block text-sm font-medium mb-1">Email</label>
+      </p-floatlabel>
+    </div>
+
+    <div>
+      <p-floatlabel>
+        <input formControlName="password" type="password" class="w-full rounded border px-3 py-2" />
+        <label class="block text-sm font-medium mb-1">Password</label>
+      </p-floatlabel>
+      @if (form.get('password')?.touched && form.get('password')?.invalid) {
+        <p class="text-xs text-red-600 mt-1">
+          Le mot de passe doit contenir au moins 8 caractères.
+        </p>
+      }
+    </div>
+
+    <div>
+      <p-floatlabel>
+      <input formControlName="confirm" type="password" class="w-full rounded border px-3 py-2" />
+      <label class="block text-sm font-medium mb-1">Repeat password</label>
+      </p-floatlabel>
+      @if (form.hasError('mismatch') && (form.get('confirm')?.touched || form.get('password')?.touched)){
+        <p class="text-xs text-red-600 mt-1">
+          Les mots de passe ne correspondent pas.
+        </p>
+      }
+    </div>
+
+    <button type="submit" class="w-full py-2 rounded bg-orange-400 text-white font-semibold hover:opacity-90 transition duration-200 ease-in-out"
+            [disabled]="form.invalid">
+      REGISTER
+    </button>
+  </div>
+</form>
