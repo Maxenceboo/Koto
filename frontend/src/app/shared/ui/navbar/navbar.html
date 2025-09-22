@@ -1,12 +1,47 @@
-<header class="w-full border-b bg-white">
-  <div class="max-w-6xl mx-auto h-14 px-4 flex items-center justify-between">
-    <a routerLink="/" class="flex items-center gap-2 font-semibold">
-      <span class="inline-block w-5 h-5 bg-orange-500 rounded-sm"></span>
-      <span>koto</span>
-    </a>
-    <nav class="flex items-center gap-2">
-      <a routerLink="/register" class="px-3 py-2 text-sm rounded hover:bg-gray-100">Register</a>
-      <a routerLink="/login" class="px-3 py-2 text-sm rounded bg-blue-600 text-white hover:opacity-90">Login</a>
-    </nav>
-  </div>
-</header>
+<div class="p-4 md:px-6">
+  <p-menubar class="max-w-7xl mx-auto">
+    <!-- Gauche : logo + brand -->
+    <ng-template pTemplate="start">
+      <a class="flex items-center gap-2 no-underline" [routerLink]="['/']">
+        <img src="assets/images/koto_logo.png" alt="Koto" class="h-5">
+        <span class="font-semibold">KO<span class="font-semibold text-orange-500">TO</span></span>
+      </a>
+    </ng-template>
+
+    <!-- Droite : selon état -->
+    <ng-template pTemplate="end">
+      @if (isAuth) {
+        <div class="flex items-center gap-3">
+          <button type="button"
+                  class="relative rounded-full px-3 py-1 text-sm hover:bg-white/10 transition">
+            <span aria-hidden="true">🔔</span>
+            @if (notifCount > 0) {
+              <span class="absolute -top-1 -right-1 text-[10px] leading-none rounded-full bg-orange-500 text-white px-1.5 py-0.5">
+                {{ notifCount }}
+              </span>
+            }
+          </button>
+
+          <p-tieredMenu #userMenu [popup]="true" [model]="userMenuItems" appendTo="body"></p-tieredMenu>
+
+            <!-- //TODO : add image user or default image -->
+          <button class="rounded-full overflow-hidden w-9 h-9 ring-1 ring-white/10"
+                  (click)="userMenu.toggle($event)" aria-label="User menu">
+            <img src="assets/images/avatar.png" alt="User" class="w-full h-full object-cover">
+          </button>
+        </div>
+      } @else {
+        <div class="flex items-center gap-2">
+          <a [routerLink]="['/register']"
+              class="inline-flex items-center rounded-full bg-orange-500/90 hover:bg-orange-500 text-white text-sm px-3 py-1.5 transition">
+            <span class="mr-1">+</span> Register
+          </a>
+          <a [routerLink]="['/login']"
+              class="inline-flex items-center rounded-full text-sm px-3 py-1.5 hover:bg-white/10 transition">
+            Login
+          </a>
+        </div>
+      }
+    </ng-template>
+  </p-menubar>
+</div>
