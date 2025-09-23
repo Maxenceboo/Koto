@@ -12,5 +12,8 @@ import type { Message } from '../../dashboard';
 export class MessageListComponent {
   @Input() messages: Message[] = [];
   @Input() currentUserId = 0;
+  @Input() myVotes: Record<number, number> = {};
   @Output() delete = new EventEmitter<number>();
+  @Output() like = new EventEmitter<number>();
+  @Output() dislike = new EventEmitter<number>();
 }

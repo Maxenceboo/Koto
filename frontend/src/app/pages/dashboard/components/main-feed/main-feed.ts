@@ -17,9 +17,12 @@ export class DashboardMain {
   @Input() members: Member[] = [];
   @Input() currentUserId = 1;
   @Input() messages: Message[] = [];
+  @Input() myVotes: Record<number, number> = {};
   @Output() leaveChannel = new EventEmitter<Channel>();
   @Output() sendMessage = new EventEmitter<{ text: string; attributedTo: Member }>();
   @Output() deleteMessage = new EventEmitter<number>();
+  @Output() likeMessage = new EventEmitter<number>();
+  @Output() dislikeMessage = new EventEmitter<number>();
 
   showLeaveDialog = false;
 
@@ -31,6 +34,14 @@ export class DashboardMain {
 
   onDeleteMessage(messageId: number) {
     this.deleteMessage.emit(messageId);
+  }
+
+  onLike(messageId: number) {
+    this.likeMessage.emit(messageId);
+  }
+
+  onDislike(messageId: number) {
+    this.dislikeMessage.emit(messageId);
   }
 
   onLeaveClick() {
