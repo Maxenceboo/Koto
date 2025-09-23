@@ -1,0 +1,25 @@
+<div class="flex flex-col items-center justify-center min-h-[calc(100vh-64px)] text-center">
+  <h1 class="text-4xl md:text-5xl font-bold mb-8">Welcome to Koto</h1>
+  <p class="text-lg opacity-70 mb-12 max-w-xl">
+    Join our community and start sharing your quotes, ideas and inspiration.
+  </p>
+
+  <div class="flex gap-6">
+    <p-button
+      label="Login"
+      icon="pi pi-sign-in"
+      size="large"
+      class="w-36 h-14 text-lg"
+      [routerLink]="['/login']">
+    </p-button>
+
+    <p-button
+      label="Register"
+      icon="pi pi-user-plus"
+      severity="warn"
+      size="large"
+      class="w-36 h-14 text-lg"
+      [routerLink]="['/register']">
+    </p-button>
+  </div>
+</div>

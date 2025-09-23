@@ -43,7 +43,6 @@ export class RegisterForm {
   // Méthode appelee lors de la soumission du formulaire
 
   submit() {
-    console.warn("fmgjclbncglkvnb")
     if (this.form.invalid) return;
     const { username, email, password } = this.form.value as any;
     this.register.emit({ username, email, password });

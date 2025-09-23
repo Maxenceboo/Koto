@@ -12,7 +12,7 @@ import { MenuItem } from 'primeng/api';
 })
 export class NavbarComponent {
   // TODO : remplace plus tard par ton AuthService
-  isAuth = true;
+  isAuth = false;
   notifCount = 2;
 
   userMenuItems: MenuItem[] = [];
