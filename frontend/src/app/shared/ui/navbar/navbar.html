@@ -12,9 +12,12 @@
     <ng-template pTemplate="end">
       @if (isAuth) {
         <div class="flex items-center gap-3">
+          <!-- Notifications -->
           <button type="button"
-                  class="relative rounded-full px-3 py-1 text-sm hover:bg-white/10 transition">
-            <span aria-hidden="true">🔔</span>
+                  class="relative rounded-full px-3 py-1 text-sm hover:bg-white/10 transition"
+                  (click)="notifPopover.toggle($event)"
+                  aria-label="Notifications">
+            <i class="pi pi-bell"></i>
             @if (notifCount > 0) {
               <span class="absolute -top-1 -right-1 text-[10px] leading-none rounded-full bg-orange-500 text-white px-1.5 py-0.5">
                 {{ notifCount }}
@@ -22,9 +25,30 @@
             }
           </button>
 
+          <p-popover #notifPopover>
+            <ng-template pTemplate="content">
+              <div class="w-72">
+                <div class="px-2 py-2 text-sm font-semibold opacity-80">Notifications</div>
+                <div class="divide-y divide-white/10">
+                  @if (notifications?.length === 0) {
+                    <div class="px-3 py-4 text-sm opacity-60">Aucune notification</div>
+                  } @else {
+                    @for (n of notifications; track n.id) {
+                      <div class="px-3 py-2 text-sm">
+                        <div>{{ n.text }}</div>
+                        <div class="text-xs opacity-60">{{ n.date }}</div>
+                      </div>
+                    }
+                  }
+                </div>
+              </div>
+            </ng-template>
+          </p-popover>
+
+          <!-- Menu utilisateur -->
           <p-tieredMenu #userMenu [popup]="true" [model]="userMenuItems" appendTo="body"></p-tieredMenu>
 
-            <!-- //TODO : add image user or default image -->
+          <!-- Avatar utilisateur -->
           <button class="rounded-full overflow-hidden w-9 h-9 ring-1 ring-white/10"
                   (click)="userMenu.toggle($event)" aria-label="User menu">
             <img src="assets/images/avatar.png" alt="User" class="w-full h-full object-cover">
@@ -44,4 +68,5 @@
       }
     </ng-template>
   </p-menubar>
+
 </div>

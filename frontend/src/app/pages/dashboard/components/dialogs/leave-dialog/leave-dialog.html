@@ -1,0 +1,24 @@
+<p-dialog
+  header="Leave channel"
+  [(visible)]="visible"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  appendTo="body"
+  [style]="{ width: '26rem' }"
+  (onHide)="cancel.emit()">
+  <div class="space-y-4">
+    <div class="text-sm">
+      Are you sure you want to leave
+      <span class="font-semibold">"{{ channel?.name }}"</span>?
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div class="flex items-center justify-end gap-2">
+      <p-button label="Cancel" [text]="true" (onClick)="cancel.emit()"></p-button>
+      <p-button label="Leave" severity="danger" (onClick)="confirm.emit()"></p-button>
+    </div>
+  </ng-template>
+</p-dialog>
+

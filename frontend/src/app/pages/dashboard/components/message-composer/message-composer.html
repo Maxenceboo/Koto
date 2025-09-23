@@ -1,0 +1,29 @@
+<div class="flex items-center gap-2">
+  <p-autoComplete
+    [(ngModel)]="selected"
+    [dropdown]="true"
+    [suggestions]="filtered"
+    (completeMethod)="search($event)"
+    [optionLabel]="'name'"
+    [forceSelection]="true"
+    placeholder="Attribuer à..."
+    class="w-64">
+  </p-autoComplete>
+
+  <input
+    pInputText
+    type="text"
+    [(ngModel)]="text"
+    placeholder="Écrire une citation..."
+    class="flex-1"
+    (keyup.enter)="submit()" />
+
+  <p-button
+    icon="pi pi-send"
+    label="Envoyer"
+    severity="warn"
+    (onClick)="submit()"
+    [disabled]="!text?.trim() || !selected">
+  </p-button>
+</div>
+

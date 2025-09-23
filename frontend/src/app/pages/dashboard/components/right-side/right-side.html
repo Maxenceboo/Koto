@@ -1,0 +1,12 @@
+<div class="p-3 rounded-lg border border-white/10 bg-white/5 space-y-3">
+  <h2 class="text-sm font-semibold opacity-70">Membres</h2>
+
+  <ul class="space-y-2 text-sm">
+    @for (m of members; track m.id) {
+      <li class="flex items-center justify-between">
+        <span>{{ m.name }}</span>
+        <button class="text-orange-500 hover:underline">Voir</button>
+      </li>
+    }
+  </ul>
+</div>

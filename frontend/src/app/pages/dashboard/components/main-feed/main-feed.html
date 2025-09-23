@@ -1,0 +1,29 @@
+<div class="space-y-4">
+  <header class="flex items-center justify-between">
+    <h1 class="text-xl font-semibold">{{ channel?.name }}</h1>
+    <div class="flex items-center gap-2">
+      <div class="text-sm opacity-70">#{{ channel?.id }}</div>
+      <p-button
+        size="small"
+        severity="secondary"
+        icon="pi pi-sign-out"
+        label="Leave"
+        (onClick)="onLeaveClick()"
+        [disabled]="!channel">
+      </p-button>
+    </div>
+  </header>
+  <div class="my-4">
+    <app-message-composer [members]="members" (send)="onSendMessage($event)"></app-message-composer>
+  </div>
+
+  <div class="my-4">
+    <app-message-list [messages]="messages" [currentUserId]="currentUserId" (delete)="onDeleteMessage($event)"></app-message-list>
+  </div>
+  <app-leave-dialog
+    [visible]="showLeaveDialog"
+    [channel]="channel"
+    (confirm)="confirmLeave()"
+    (cancel)="cancelLeave()">
+  </app-leave-dialog>
+</div>

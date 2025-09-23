@@ -4,5 +4,6 @@ import { HomePage } from './pages/home/home';
 export const routes: Routes = [
   { path: '', component: HomePage },
   { path: 'login', loadComponent: () => import('./pages/login/login').then(m => m.Login) },
-  { path: 'register', loadComponent: () => import('./pages/register/register').then(m => m.Register) }
+  { path: 'register', loadComponent: () => import('./pages/register/register').then(m => m.Register) },
+  { path: 'dashboard', loadComponent: () => import('./pages/dashboard/dashboard').then(m => m.DashboardPage) }
 ];

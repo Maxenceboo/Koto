@@ -1,0 +1,33 @@
+<div class="p-3 rounded-lg border border-white/10 bg-white/5 flex flex-col">
+
+  <div class="flex items-center justify-between mb-2 gap-2">
+    <h2 class="text-sm font-semibold opacity-70">Channels</h2>
+    <div class="flex items-center gap-2">
+      <p-button
+        size="small"
+        severity="warn"
+        icon="pi pi-plus"
+        label="Add"
+        (onClick)="onAddClick()">
+      </p-button>
+    </div>
+  </div>
+
+
+  <div class="flex-1 min-h-0">
+    <p-listbox
+      [options]="channels"
+      [(ngModel)]="internalSelected"
+      optionLabel="name"
+      (onChange)="emitSelection()"
+      [style]="{ width: '100%' }"
+      scrollHeight="calc(100% - 40px)">
+    </p-listbox>
+  </div>
+  <app-add-channel-dialog
+    [(visible)]="showAddDialog"
+    (cancel)="showAddDialog = false"
+    (joinByUrl)="onJoinByUrl($event)"
+    (create)="onCreateChannel($event)">
+  </app-add-channel-dialog>
+</div>

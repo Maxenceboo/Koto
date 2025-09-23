@@ -1,0 +1,43 @@
+<p-dialog
+  header="Add channel"
+  [(visible)]="visible"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  appendTo="body"
+  [style]="{ width: '28rem' }"
+  (onHide)="cancel.emit()">
+  <div class="space-y-4">
+    <div class="space-y-2">
+      <div class="text-sm opacity-80">Method</div>
+      <p-selectButton [(ngModel)]="method" [options]="methodOptions" optionLabel="label" optionValue="value"></p-selectButton>
+    </div>
+
+    @if (method === 'url') {
+      <div class="space-y-2">
+        <div class="text-sm opacity-80">Invite URL</div>
+        <input pInputText type="text" [(ngModel)]="url" placeholder="https://..." class="w-full" />
+      </div>
+    }
+
+    @if (method === 'create') {
+      <div class="space-y-2">
+        <div class="text-sm opacity-80">Channel name</div>
+        <input pInputText type="text" [(ngModel)]="name" placeholder="ex: general" class="w-full" />
+      </div>
+    }
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div class="flex items-center justify-end gap-2">
+      <p-button label="Cancel" [text]="true" (onClick)="cancel.emit()"></p-button>
+      <p-button
+        label="Confirm"
+        severity="warn"
+        (onClick)="confirmAction()"
+        [disabled]="(method === 'url' && !url?.trim()) || (method === 'create' && !name?.trim())">
+      </p-button>
+    </div>
+  </ng-template>
+</p-dialog>
+
