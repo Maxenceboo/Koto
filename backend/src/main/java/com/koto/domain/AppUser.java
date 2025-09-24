@@ -21,6 +21,12 @@ public class AppUser {
     @Column(name = "usernameGlobal", nullable = false, length = 50)
     private String usernameGlobal;
 
+    @Column(name = "password_hash")
+    private String passwordHash;
+
+    @Column(name = "role", nullable = false)
+    private String role = "USER";
+
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;

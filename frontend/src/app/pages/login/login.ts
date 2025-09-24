@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment} from '../../../../environements/environement';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../shared/services/auth.service';
 import { LoginForm } from './components/login-form/login-form';
 @Component({
   selector: 'app-login-page',
@@ -9,16 +9,16 @@ import { LoginForm } from './components/login-form/login-form';
   templateUrl: './login.html',
 })
 export class Login {
-  constructor(private http: HttpClient) {}
-
+  private auth = inject(AuthService);
+  private router = inject(Router);
 
   onLogin(payload: { email: string; password: string }) {
-    this.http.post(`${environment.apiBase}/auth/login`, {
-      email: payload.email,
-      password: payload.password,
-        }).subscribe({
-      next: () => alert('Connecter !'),
-      error: (e) => alert(e?.error?.message ?? 'Erreur lors de la connection'),
+    this.auth.login(payload.email, payload.password).subscribe({
+      next: (res) => {
+        this.auth.setSession(res);
+        this.router.navigateByUrl('/dashboard');
+      },
+      error: (e) => alert(e?.error?.message ?? 'Erreur lors de la connexion'),
     });
   }
 }

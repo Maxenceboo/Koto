@@ -24,3 +24,9 @@ springdoc:
     operations-sorter: alpha
   packages-to-scan: com.koto
   paths-to-match: /api/**
+
+security:
+  jwt:
+    # base64-encoded 256-bit secret for HS256
+    secret: ZmFrZV9rZXlfZmFrZV9rZXlfZmFrZV9rZXlfMTIzNDU2Nzg5MA==
+    expiration-ms: 86400000

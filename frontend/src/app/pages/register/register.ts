@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RegisterForm } from './components/register-form/register-form';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { environment} from '../../../../environements/environement';
+import { HttpClientModule } from '@angular/common/http';
+import { AuthService } from '../../shared/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-page',
@@ -10,16 +11,17 @@ import { environment} from '../../../../environements/environement';
   templateUrl: './register.html',
 })
 export class Register {
-  constructor(private http: HttpClient) {}
+  private auth = inject(AuthService);
+  private router = inject(Router);
 
   onRegister(payload: { username: string; email: string; password: string }) {
-    this.http.post(`${environment.apiBase}/auth/register`, {
-      usernameGlobal: payload.username,
-      email: payload.email,
-      password: payload.password,
-    }).subscribe({
-      next: () => alert('Compte créé !'),
-      error: (e) => alert(e?.error?.message ?? 'Erreur lors de l’inscription'),
+    this.auth.register(payload.email, payload.username, payload.password).subscribe({
+      next: (res) => {
+        this.auth.setSession(res);
+        this.router.navigateByUrl('/dashboard');
+      },
+      error: (e) => alert(e?.error?.message ?? "Erreur lors de l'inscription"),
     });
   }
 }
+
