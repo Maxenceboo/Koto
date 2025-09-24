@@ -18,7 +18,14 @@
   </div>
 
   <div class="my-4">
-    <app-message-list [messages]="messages" [currentUserId]="currentUserId" (delete)="onDeleteMessage($event)"></app-message-list>
+    <app-message-list
+      [messages]="messages"
+      [currentUserId]="currentUserId"
+      (delete)="onDeleteMessage($event)"
+      [myVotes]="myVotes"
+      (like)="onLike($event)"
+      (dislike)="onDislike($event)"
+    ></app-message-list>
   </div>
   <app-leave-dialog
     [visible]="showLeaveDialog"

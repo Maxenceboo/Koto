@@ -1,29 +1,30 @@
-<div class="flex items-center gap-2">
-  <p-autoComplete
-    [(ngModel)]="selected"
-    [dropdown]="true"
-    [suggestions]="filtered"
-    (completeMethod)="search($event)"
-    [optionLabel]="'name'"
-    [forceSelection]="true"
-    placeholder="Attribuer à..."
-    class="w-64">
-  </p-autoComplete>
+<div class="flex flex-col gap-3">
+  <div class="flex justify-between gap-2">
+    <p-autoComplete
+      [(ngModel)]="selected"
+      [dropdown]="true"
+      [suggestions]="filtered"
+      (completeMethod)="search($event)"
+      [optionLabel]="'name'"
+      [forceSelection]="true"
+      placeholder="Attribuer à..."
+      class="w-64">
+    </p-autoComplete>
 
-  <input
-    pInputText
-    type="text"
-    [(ngModel)]="text"
-    placeholder="Écrire une citation..."
-    class="flex-1"
-    (keyup.enter)="submit()" />
+    <p-datepicker inputId="calendar-24h" [(ngModel)]="date" [showTime]="true" [iconDisplay]="'input'" [showIcon]="true" >
+      <ng-template #inputicon let-clickCallBack="clickCallBack">
+        <i class="pi pi-calendar mx-3" (click)="clickCallBack($event)"></i>
+        <i class="pi pi-clock" (click)="clickCallBack($event)"></i>
+      </ng-template>
+    </p-datepicker>
 
-  <p-button
-    icon="pi pi-send"
-    label="Envoyer"
-    severity="warn"
-    (onClick)="submit()"
-    [disabled]="!text?.trim() || !selected">
-  </p-button>
+    <p-button
+      icon="pi pi-send"
+      label="Envoyer"
+      severity="warn"
+      (onClick)="submit()"
+      [disabled]="!text?.trim() || !selected">
+    </p-button>
+  </div>
+  <p-editor [(ngModel)]="text" [style]="{ height: '120px' }" />
 </div>
-

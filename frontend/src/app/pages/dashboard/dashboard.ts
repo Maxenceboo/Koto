@@ -20,6 +20,7 @@ export interface Message {
   authorId: number;
   createdAt: Date;
   likes: number;
+  dislikes: number;
   attributedTo: Member;
 }
 
@@ -77,12 +78,23 @@ export class DashboardPage {
   // Messages par channel et séquence locale d'ID de message
   private messagesStore = new Map<number, Message[]>();
   private nextMessageId = 1;
+  private voteStore = new Map<number, Map<number, number>>();
 
   // Initialisation de quelques messages par défaut
   // Messages du channel sélectionné
   get selectedMessages(): Message[] {
     if (!this.selectedChannel) return [];
     return this.messagesStore.get(this.selectedChannel.id) ?? [];
+  }
+
+  get selectedVotesForMe(): Record<number, number> {
+    const map: Record<number, number> = {};
+    for (const m of this.selectedMessages) {
+      const voters = this.voteStore.get(m.id);
+      const v = voters?.get(this.currentUserId) ?? 0;
+      if (v) map[m.id] = v;
+    }
+    return map;
   }
 
   onChannelSelect(channel: Channel) {
@@ -127,7 +139,7 @@ export class DashboardPage {
     this.messagesStore.delete(channel.id);
   }
 
-  onCreateMessage(payload: { text: string; attributedTo: Member }) {
+  onCreateMessage(payload: { text: string; attributedTo: Member, date: Date }) {
     if (!this.selectedChannel) return;
     const list = [...(this.messagesStore.get(this.selectedChannel.id) ?? [])];
     const id = this.nextMessageId++;
@@ -135,8 +147,9 @@ export class DashboardPage {
       id,
       text: payload.text,
       authorId: this.currentUserId,
-      createdAt: new Date(),
+      createdAt: payload.date,
       likes: 0,
+      dislikes: 0,
       attributedTo: payload.attributedTo
     });
     this.messagesStore.set(this.selectedChannel.id, list);
@@ -149,5 +162,42 @@ export class DashboardPage {
       this.selectedChannel.id,
       list.filter(m => m.id !== messageId)
     );
+  }
+
+  onLikeMessage(messageId: number) {
+    this.applyVote(messageId, 1);
+  }
+
+  onDislikeMessage(messageId: number) {
+    this.applyVote(messageId, -1);
+  }
+
+  private applyVote(messageId: number, vote: 1 | -1) {
+    if (!this.selectedChannel) return;
+    const list = this.messagesStore.get(this.selectedChannel.id) ?? [];
+    const idx = list.findIndex(m => m.id === messageId);
+    if (idx === -1) return;
+    const message = { ...list[idx] };
+
+    const voters = this.voteStore.get(messageId) ?? new Map<number, number>();
+    const prev = voters.get(this.currentUserId) ?? 0;
+
+    // remove previous vote
+    if (prev === 1) message.likes = Math.max(0, message.likes - 1);
+    if (prev === -1) message.dislikes = Math.max(0, message.dislikes - 1);
+
+    // toggle logic: if clicking same vote, clear it; else set new vote
+    const next = prev === vote ? 0 : vote;
+    if (next === 1) message.likes += 1;
+    if (next === -1) message.dislikes += 1;
+
+    // persist vote
+    if (next === 0) voters.delete(this.currentUserId); else voters.set(this.currentUserId, next);
+    this.voteStore.set(messageId, voters);
+
+    // persist message list immutably
+    const newList = [...list];
+    newList[idx] = message;
+    this.messagesStore.set(this.selectedChannel.id, newList);
   }
 }

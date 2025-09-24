@@ -17,7 +17,30 @@
           </p-button>
         }
       </div>
-      <div class="text-sm">{{ m.text }}</div>
+      <div [innerHTML]="m.text" class="text-sm mb-2"></div>
+      <div class="text-sm mb-2">{{m.text}}</div>
+
+
+      <div class="flex items-center gap-3 text-xs">
+          <p-button
+            size="small"
+            [text]="true"
+            [raised]="myVotes[m.id] === 1"
+            icon="pi pi-thumbs-up"
+            (onClick)="like.emit(m.id)">
+          </p-button>
+          <span>{{ m.likes }}</span>
+          <p-button
+            size="small"
+            [text]="true"
+            [raised]="myVotes[m.id] === -1"
+            icon="pi pi-thumbs-down"
+            (onClick)="dislike.emit(m.id)">
+          </p-button>
+          <span>{{ m.dislikes }}</span>
+        </div>
+
+
     </div>
   }
 </div>

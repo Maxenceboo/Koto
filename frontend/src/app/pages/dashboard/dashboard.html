@@ -18,8 +18,11 @@
         [members]="selectedMembers"
         [currentUserId]="currentUserId"
         [messages]="selectedMessages"
+        [myVotes]="selectedVotesForMe"
         (sendMessage)="onCreateMessage($event)"
         (deleteMessage)="onDeleteMessage($event)"
+        (likeMessage)="onLikeMessage($event)"
+        (dislikeMessage)="onDislikeMessage($event)"
         (leaveChannel)="onLeaveChannel($event)"></app-dashboard-main>
     </section>
 

@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/user")
 @RequiredArgsConstructor
 @Tag(name = "AppUser", description = "Operations related to application users")
 public class AppUserController {
@@ -30,11 +30,18 @@ public class AppUserController {
                 .toList();
     }
 
+    @Operation(summary = "Récupérer un utilisateur par ID")
+    @GetMapping("/{id}")
+    public ResponseEntity<AppUserDto> getUserById(@PathVariable UUID id) {
+        AppUser user = service.getById(id);
+        return ResponseEntity.ok(AppUserMapper.toDto(user));
+    }
+
     @Operation(summary = "créer un utilisateur")
     @PostMapping
     public ResponseEntity<AppUserDto> createUser(@Valid @RequestBody AppUser user) {
         AppUser createdUser = service.create(user.getEmail(), user.getUsernameGlobal());
-        return ResponseEntity.created(URI.create("/api/users/" + createdUser.getId()))
+        return ResponseEntity.created(URI.create("/api/user/" + createdUser.getId()))
                 .body(AppUserMapper.toDto(createdUser));
     }
 
