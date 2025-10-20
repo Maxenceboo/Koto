@@ -3,60 +3,47 @@ package com.koto.service;
 import com.koto.domain.AppUser;
 import com.koto.repository.AppUserRepository;
 import com.koto.service.bo.appuser.AppUserBo;
-import jakarta.persistence.EntityNotFoundException;
+import com.koto.service.bo.appuser.CreateUserBo;
+import com.koto.service.mapper.AppUserEntityToBoMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class AppUserService {
-    private final AppUserRepository repo;
-	@Autowired
 
+	private final AppUserRepository repo;
 
-    public AppUserBo create(String email, String usernameGlobal) {
-        if (repo.existsByEmail(email)) {
-            throw new IllegalArgumentException("Email already in use");
-        }
-        AppUser user = AppUser.builder()
-                .email(email)
-                .usernameGlobal(usernameGlobal)
-                .build();
-        return mapper(repo.save(user);
-    }
+	private final AppUserEntityToBoMapper mapper;
 
-    public AppUser getById(UUID id) {
-        return repo.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
-    }
+	@Transactional
+	public AppUserBo create(final CreateUserBo createUserBo) {
 
-    public AppUser update(UUID id, AppUser appUser) {
-        if (repo.existsById(id)) {
-            appUser.setId(id);
-            return repo.save(appUser);
-        } else {
-            throw new EntityNotFoundException("User not found");
-        }
-    }
+		final String email = createUserBo.getEmail();
+		final String username = createUserBo.getUsername();
+		final String password = createUserBo.getPassword();
 
-    public void delete(UUID id) {
-        if (repo.existsById(id)) {
-            repo.deleteById(id);
-        } else {
-            throw new EntityNotFoundException("User not found");
-        }
-    }
+		if (this.repo.existsByEmail(email)) {
+			throw new IllegalArgumentException("Email already in use");
+		}
 
-    public List<AppUser> list() {
-        if (repo.findAll().isEmpty()) {
-            throw new EntityNotFoundException("Users not found");
-        }
-        return repo.findAll();
-    }
+		final AppUser user = AppUser.builder().email(email).username(username).password(password).build();
+
+		final AppUser saved = this.repo.save(user);
+
+		this.repo.flush();
+
+		return this.mapper.toBo(saved);
+	}
+
+	@Transactional
+	public AppUserBo getByEmail(final String email) {
+		final AppUser user = this.repo.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+		return this.mapper.toBo(user);
+	}
+
 }

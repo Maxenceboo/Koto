@@ -1,0 +1,43 @@
+<div class="max-w-7xl mx-auto">
+  <div class="grid grid-cols-12 gap-4">
+    <!-- Left sidebar -->
+    <section class="col-span-12 md:col-span-3">
+      <app-dashboard-left
+        [channels]="channels"
+        [selectedChannel]="selectedChannel"
+        (channelSelect)="onChannelSelect($event)"
+        (joinChannelByUrl)="onJoinByUrl($event)"
+        (createChannel)="onCreateChannel($event)">
+      </app-dashboard-left>
+    </section>
+
+    <!-- Main content -->
+<!--    <section class="col-span-12 md:col-span-6">-->
+<!--      <app-dashboard-main-->
+<!--        [channel]="selectedChannel"-->
+<!--        [members]="selectedMembers"-->
+<!--        [currentUserId]="currentUserId"-->
+<!--        [messages]="selectedMessages"-->
+<!--        [myVotes]="selectedVotesForMe"-->
+<!--        (sendMessage)="onCreateMessage($event)"-->
+<!--        (deleteMessage)="onDeleteMessage($event)"-->
+<!--        (likeMessage)="onLikeMessage($event)"-->
+<!--        (dislikeMessage)="onDislikeMessage($event)"-->
+<!--        (leaveChannel)="onLeaveChannel($event)"></app-dashboard-main>-->
+<!--    </section>-->
+
+    <section class="col-span-12 md:col-span-6">
+      <app-dashboard-main
+        [channel]="selectedChannel"
+        [currentUserId]="currentUserId"
+        (sendMessage)="onCreateMessage($event)"
+        (deleteMessage)="onDeleteMessage($event)"
+        (likeMessage)="onLikeMessage($event)"
+        (leaveChannel)="onLeaveChannel($event)"></app-dashboard-main>
+    </section>
+    <!-- Right sidebar -->
+    <section class="col-span-12 md:col-span-3">
+      <app-dashboard-right [members]="selectedMembers"></app-dashboard-right>
+    </section>
+  </div>
+</div>

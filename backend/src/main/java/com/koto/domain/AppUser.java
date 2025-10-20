@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -20,13 +22,17 @@ public class AppUser {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(name = "usernameGlobal", nullable = false, length = 50)
-    private String usernameGlobal;
+    @Column(name = "username", nullable = false, length = 50)
+    private String username;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
-    private Instant createdAt;
+	@Temporal(TemporalType.TIMESTAMP)
+	private LocalDateTime createdAt;
 
     @Column(name = "password", nullable = false)
     private String password;
+
+	@OneToMany(mappedBy = "user")
+	private List<ChannelMember> memberships = new ArrayList<>();
 }

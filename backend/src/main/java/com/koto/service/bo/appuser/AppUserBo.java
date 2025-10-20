@@ -1,26 +1,22 @@
 package com.koto.service.bo.appuser;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class AppUserBo {
 
 	private UUID id;
 
 	private String email;
 
-	private String usernameGlobal;
+	private String username;
 
-	private Instant createdAt;
+	private LocalDateTime createdAt;
 
 	private String password;
 }

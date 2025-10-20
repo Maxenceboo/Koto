@@ -1,6 +1,21 @@
 package com.koto.web.dto.appuser;
 
-import java.time.Instant;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.time.LocalDateTime;
 import java.util.UUID;
 
-public record AppUserDto(UUID id, String username, Instant createdAt) {}
+@Getter
+@Setter
+public class AppUserDto {
+
+	private UUID id;
+
+	private String email;
+
+	private String username;
+
+	private LocalDateTime createdAt;
+
+}
